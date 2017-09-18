@@ -1,0 +1,19 @@
+[template]
+src   = "config.ini"
+dest  = "/app/etc/config.ini"
+owner = "root"
+group = "root"
+mode  = "0644"
+keys = [
+"/elasticsearch/host",
+"/elasticsearch/port",
+"/elasticsearch/prefix",
+"/moloch/capture/bpf",
+"/moloch/capture/interface",
+"/moloch/capture/max_file_size",
+"/moloch/s3/host",
+"/moloch/s3/bucket",
+"/moloch/s3/region",
+"/moloch/s3/accesskeyid",
+"/moloch/s3/secretaccesskey",
+]
