@@ -17,6 +17,7 @@
  */
 'use strict';
 
+var https = require('https');
 var AWS = require('aws-sdk');
 var async = require('async');
 var util = require('util');
@@ -39,6 +40,14 @@ function splitRemain(str, separator, limit) {
 //////////////////////////////////////////////////////////////////////////////////
 function makeS3(node, region)
 {
+  AWS.config.httpOptions = {
+    agent: new https.Agent({
+      rejectUnauthorized: false
+    })
+  };
+
+  AWS.config.s3 = { endpoint: Config.getFull(node, "s3Host") };
+
   var key = Config.getFull(node, "s3AccessKeyId");
   if (!key) {
     console.log("ERROR - No s3AccessKeyId set for ", node);

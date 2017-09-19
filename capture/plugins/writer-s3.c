@@ -59,7 +59,8 @@ static SavepcapS3File_t      fileQ;
 
 static void *                s3Server = 0;
 static char                  *s3Region;
-static char                   s3Host[100];
+// static char                   s3Host[100];
+static char                  *s3Host;
 static char                  *s3Bucket;
 static char                  *s3AccessKeyId;
 static char                  *s3SecretAccessKey;
@@ -462,6 +463,7 @@ void writer_s3_init(char *UNUSED(name))
     moloch_writer_write        = writer_s3_write;
 
     s3Region              = moloch_config_str(NULL, "s3Region", "us-east-1");
+    s3Host                = moloch_config_str(NULL, "s3Host", "s3.amazonaws.com");
     s3Bucket              = moloch_config_str(NULL, "s3Bucket", NULL);
     s3AccessKeyId         = moloch_config_str(NULL, "s3AccessKeyId", NULL);
     s3SecretAccessKey     = moloch_config_str(NULL, "s3SecretAccessKey", NULL);
@@ -488,16 +490,16 @@ void writer_s3_init(char *UNUSED(name))
         config.pcapWriteSize = 5242880;
     }
 
-    if (strcmp(s3Region, "us-east-1") == 0) {
-        strcpy(s3Host, "s3.amazonaws.com");
-    } else {
-        snprintf(s3Host, sizeof(s3Host), "s3-%s.amazonaws.com", s3Region);
-    }
+  //if (strcmp(s3Region, "us-east-1") == 0) {
+    //    strcpy(s3Host, "s3.amazonaws.com");
+    //} else {
+    //    snprintf(s3Host, sizeof(s3Host), "s3-%s.amazonaws.com", s3Region);
+  //  }
 
     config.maxFileSizeB = MIN(config.maxFileSizeB, config.pcapWriteSize*2000);
 
     char host[200];
-    snprintf(host, sizeof(host), "https://%s", s3Host);
+    snprintf(host, sizeof(host), "http://%s", s3Host);
     s3Server = moloch_http_create_server(host, s3MaxConns, s3MaxRequests, s3Compress);
     moloch_http_set_header_cb(s3Server, writer_s3_header_cb);
 
