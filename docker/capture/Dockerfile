@@ -79,7 +79,7 @@ RUN \
 
 RUN \
     mkdir -p /app/bin && \
-    curl -L https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.11.0-linux-amd64 -o /app/bin/confd && \
+    curl -L https://github.com/kelseyhightower/confd/releases/download/v0.13.0/confd-0.13.0-linux-amd64 -o /app/bin/confd && \
     chmod +x /app/bin/confd
 
 COPY aclocal.m4 compile config.guess config.sub configure configure.ac install-sh Makefile.am Makefile.in missing /src/
