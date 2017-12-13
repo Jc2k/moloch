@@ -2290,9 +2290,22 @@ void moloch_db_init()
     }
     if (!config.dryRun) {
         esServer = moloch_http_create_server(config.elasticsearch, config.maxESConns, config.maxESRequests, config.compressES);
-        static char *headers[2];
+        static char *headers[3];
         headers[0] = "Content-Type: application/json";
-        headers[1] = NULL;
+
+        // If basic auth details are in config pre-generate the Authorization header
+        // and include it in every request
+        if (config.elasticsearchUsername != NULL && config.elasticsearchPassword) {
+            gchar *auth = g_strjoin(":", config.elasticsearchUsername, config.elasticsearchPassword, NULL);
+            gchar *encoded = g_base64_encode((guchar *) auth, strlen(auth));
+            headers[1] = g_strjoin(" ", "Authorization: Basic", encoded, NULL);
+            g_free(encoded);
+            g_free(auth);
+        } else {
+            headers[1] = NULL;
+        }
+
+        headers[2] = NULL;
         moloch_http_set_headers(esServer, headers);
     }
     DLL_INIT(t_, &tagRequests);
