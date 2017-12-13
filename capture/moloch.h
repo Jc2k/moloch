@@ -303,6 +303,8 @@ typedef struct moloch_config {
     char     *prefix;
     char     *nodeClass;
     char     *elasticsearch;
+    char     *elasticsearchUsername;
+    char     *elasticsearchPassword;
     char    **interface;
     int       pcapDirPos;
     char    **pcapDir;
@@ -1080,4 +1082,3 @@ void *moloch_trie_del_reverse(MolochTrie_t *trie, const char *key, const int len
  * js0n.c
  */
 int js0n(unsigned char *js, unsigned int len, unsigned int *out);
-

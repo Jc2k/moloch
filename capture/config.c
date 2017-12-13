@@ -365,6 +365,8 @@ void moloch_config_load()
     }
 
     config.elasticsearch    = moloch_config_str(keyfile, "elasticsearch", "localhost:9200");
+    config.elasticsearchUsername = moloch_config_str(keyfile, "elasticsearchUsername", NULL);
+    config.elasticsearchPassword = moloch_config_str(keyfile, "elasticsearchPassword", NULL);
     config.interface        = moloch_config_str_list(keyfile, "interface", NULL);
     config.pcapDir          = moloch_config_str_list(keyfile, "pcapDir", NULL);
     config.bpf              = moloch_config_str(keyfile, "bpf", NULL);
