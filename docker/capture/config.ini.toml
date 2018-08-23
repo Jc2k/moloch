@@ -18,4 +18,5 @@ keys = [
 "/moloch/s3/region",
 "/moloch/s3/accesskeyid",
 "/moloch/s3/secretaccesskey",
+"/moloch/suricata/alertfile",
 ]
